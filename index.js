@@ -5,7 +5,7 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 const fs = require("fs");
-var numPeople = 0;
+var numPeople = 0; // counter number of people in the chat
 
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
@@ -19,6 +19,8 @@ io.on("connection", (socket) => {
     "A person just connected",
     ++numPeople + " people in the room"
   );
+
+  // anounce when some one disconected
   socket.on("disconnect", () => {
     io.emit(
       "msDisconnect",

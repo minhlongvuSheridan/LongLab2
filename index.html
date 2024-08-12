@@ -64,9 +64,6 @@
 
     <script src="/socket.io/socket.io.js"></script>
     <script>
-      // var socket = io();
-      // Notice that I’m not specifying any URL when I call io(), since it defaults to trying to connect to the host that serves the page.
-
       var socket = io();
 
       var messages = document.getElementById("messages");
@@ -92,18 +89,23 @@
         sendSmallMessage(msg1);
         sendSmallMessage(msg2);
       });
+      // print line by line the message in the store file
       socket.on("StoredMessage", function (msg) {
         var lines = msg.split("\n");
         for (var line = 0; line < lines.length; line++) {
           sendMessage(lines[line]);
         }
       });
+
+      // style of normal message
       function sendMessage(msg) {
         var item = document.createElement("li");
         item.textContent = msg;
         messages.appendChild(item);
         window.scrollTo(0, document.body.scrollHeight);
       }
+
+      // style of message when announce connect, disconnect person
       function sendSmallMessage(msg) {
         var item = document.createElement("li");
         item.textContent = msg;
